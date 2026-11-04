@@ -12,6 +12,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 //Services
 builder.Services.AddControllers();
 builder.Services.AddScoped<INoteService, NoteService>();
+builder.Services.AddHealthChecks();
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -54,5 +55,6 @@ app.UseCors();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHealthChecks("/health");
 
 app.Run();
