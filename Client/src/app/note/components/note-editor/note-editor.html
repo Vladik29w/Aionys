@@ -1,0 +1,122 @@
+<main class="note-editor">
+  <header class="editor-header">
+    <h1 class="editor-title">
+      {{ (noteId() ? 'notes.editor.editTitle' : 'notes.editor.newTitle') | translate }}
+    </h1>
+
+    <app-language-switcher />
+  </header>
+
+  <form [formGroup]="form" (ngSubmit)="save()" [attr.aria-busy]="store.isEditorBusy()">
+    @if (store.isLoadingNote()) {
+      <mat-progress-bar
+        mode="indeterminate"
+        [attr.aria-label]="'notes.editor.loadingAriaLabel' | translate"
+      />
+      <p class="loading-message" role="status">{{ 'notes.editor.loading' | translate }}</p>
+    }
+
+    @if (store.editorError(); as editorError) {
+      <p class="error-message" role="alert">{{ editorError | translate }}</p>
+    }
+
+    @if (isFormReady()) {
+      <div class="editor-fields">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'notes.editor.titleLabel' | translate }}</mat-label>
+          <input
+            matInput
+            formControlName="title"
+            [maxlength]="titleMaxLength"
+            data-testid="note-title-input"
+          />
+          @if (form.controls.title.hasError('required') || form.controls.title.hasError('pattern')) {
+            <mat-error>{{ 'notes.editor.titleRequired' | translate }}</mat-error>
+          } @else if (form.controls.title.hasError('maxlength')) {
+            <mat-error>
+              {{ 'notes.editor.titleMaxLength' | translate: { max: titleMaxLength } }}
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'notes.editor.textLabel' | translate }}</mat-label>
+          <textarea
+            matInput
+            formControlName="text"
+            rows="10"
+            [maxlength]="textMaxLength"
+            data-testid="note-text-input"
+          ></textarea>
+          @if (form.controls.text.hasError('maxlength')) {
+            <mat-error>
+              {{ 'notes.editor.textMaxLength' | translate: { max: textMaxLength } }}
+            </mat-error>
+          }
+        </mat-form-field>
+      </div>
+    }
+
+    <div class="editor-actions">
+      @if (isFormReady() && noteId()) {
+        @if (!isConfirmingDelete()) {
+          <button
+            matButton="text"
+            type="button"
+            class="delete-button"
+            [disabled]="store.isEditorBusy()"
+            (click)="startDelete()"
+          >
+            {{ 'notes.editor.delete' | translate }}
+          </button>
+        } @else {
+          <div class="delete-confirmation">
+            <span class="delete-confirmation-text">
+              {{ 'notes.editor.confirmDeleteQuestion' | translate }}
+            </span>
+            <button
+              matButton="filled"
+              type="button"
+              class="confirm-delete-button"
+              [disabled]="store.isEditorBusy()"
+              (click)="deleteNote()"
+            >
+              {{
+                (store.pendingAction() === 'delete'
+                  ? 'notes.editor.deleting'
+                  : 'notes.editor.confirmDelete') | translate
+              }}
+            </button>
+            <button
+              matButton="text"
+              type="button"
+              [disabled]="store.isEditorBusy()"
+              (click)="cancelDelete()"
+            >
+              {{ 'notes.editor.cancel' | translate }}
+            </button>
+          </div>
+        }
+      }
+
+      <div class="primary-actions">
+        <a matButton="outlined" routerLink="/notes" [disabled]="store.pendingAction() !== null">
+          {{ 'notes.editor.cancel' | translate }}
+        </a>
+        @if (isFormReady()) {
+          <button
+            matButton="filled"
+            type="submit"
+            [disabled]="store.isEditorBusy() || form.invalid"
+            data-testid="save-note-button"
+          >
+            {{
+              (store.pendingAction() === 'save' ? 'notes.editor.saving' : 'notes.editor.save')
+                | translate
+            }}
+          </button>
+        }
+      </div>
+    </div>
+  </form>
+</main>

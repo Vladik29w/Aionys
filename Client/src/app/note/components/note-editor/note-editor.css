@@ -1,0 +1,67 @@
+@reference "tailwindcss";
+
+:host {
+  display: block;
+  min-height: 100dvh;
+}
+
+.note-editor {
+  @apply mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12;
+}
+
+.editor-header {
+  @apply mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between;
+}
+
+.editor-title {
+  @apply m-0 text-3xl font-semibold tracking-tight;
+}
+
+.editor-fields {
+  @apply flex flex-col gap-4;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.loading-message {
+  @apply py-8 text-center;
+
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.error-message {
+  @apply mb-6 rounded-xl p-4;
+
+  background-color: var(--mat-sys-error-container);
+  color: var(--mat-sys-on-error-container);
+}
+
+.editor-actions {
+  @apply mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between;
+}
+
+.delete-button {
+  @apply self-start;
+
+  --mat-button-text-label-text-color: var(--mat-sys-error);
+}
+
+.delete-confirmation {
+  @apply flex flex-wrap items-center gap-2;
+}
+
+.delete-confirmation-text {
+  @apply text-sm font-medium;
+  color: var(--mat-sys-error);
+}
+
+.confirm-delete-button {
+  --mat-button-filled-container-color: var(--mat-sys-error);
+  --mat-button-filled-label-text-color: var(--mat-sys-on-error);
+}
+
+.primary-actions {
+  @apply flex justify-end gap-3 sm:ml-auto;
+}
