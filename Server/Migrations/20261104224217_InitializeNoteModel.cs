@@ -15,10 +15,10 @@ namespace Server.Migrations
                 name: "Notes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
-                    Text = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: true),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Title = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
+                    Text = table.Column<string>(type: "character varying(10000)", maxLength: 10000, nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
