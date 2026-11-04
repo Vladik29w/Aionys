@@ -1,0 +1,87 @@
+<main class="notes-page">
+  <header class="page-header">
+    <div>
+      <h1 class="page-title">{{ 'notes.page.title' | translate }}</h1>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-3">
+      <app-language-switcher />
+
+      <a
+        matButton="filled"
+        routerLink="/notes/new"
+        class="create-note-link"
+        data-testid="create-note-link"
+      >
+        <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
+        <span>{{ 'notes.page.create' | translate }}</span>
+      </a>
+    </div>
+  </header>
+
+  <section
+    class="notes-section"
+    [attr.aria-label]="'notes.page.listAriaLabel' | translate"
+    [attr.aria-busy]="store.isLoadingList()"
+  >
+    @if (store.isLoadingList()) {
+      <mat-progress-bar
+        mode="indeterminate"
+        [attr.aria-label]="'notes.page.loadingAriaLabel' | translate"
+      />
+      <p class="loading-message secondary-text" role="status">
+        {{ 'notes.page.loading' | translate }}
+      </p>
+    } @else if (store.listError()) {
+      <div class="state-panel" role="alert">
+        <mat-icon fontSet="material-symbols-outlined">error_outline</mat-icon>
+        <h2 class="state-title">{{ 'notes.page.loadError' | translate }}</h2>
+        <button matButton="outlined" type="button" (click)="store.loadAll()">
+          <mat-icon fontSet="material-symbols-outlined">refresh</mat-icon>
+          <span>{{ 'notes.page.retry' | translate }}</span>
+        </button>
+      </div>
+    } @else if (store.entities().length === 0) {
+      <div class="state-panel empty-state" role="status">
+        <h2 class="state-title">{{ 'notes.page.empty' | translate }}</h2>
+      </div>
+    } @else {
+      <ul class="notes-grid">
+        @for (note of store.entities(); track note.id) {
+          <li class="min-w-0">
+            <a
+              class="note-link"
+              [routerLink]="['/notes', note.id]"
+              [attr.aria-labelledby]="'note-title-' + note.id"
+            >
+              <mat-card appearance="outlined" class="note-card" data-testid="note-card">
+                <mat-card-content>
+                  <h2
+                    [id]="'note-title-' + note.id"
+                    class="note-title"
+                    data-testid="note-title"
+                  >
+                    @if (note.title.trim()) {
+                      {{ note.title }}
+                    } @else {
+                      <span>{{ 'notes.page.untitled' | translate }}</span>
+                    }
+                  </h2>
+                  @if (note.text.trim()) {
+                    <p class="note-preview secondary-text" data-testid="note-text">
+                      {{ note.text }}
+                    </p>
+                  } @else {
+                    <p class="empty-note-text secondary-text">
+                      {{ 'notes.page.noText' | translate }}
+                    </p>
+                  }
+                </mat-card-content>
+              </mat-card>
+            </a>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</main>
