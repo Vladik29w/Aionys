@@ -1,0 +1,45 @@
+{
+  "language": {
+    "switcherAriaLabel": "Language selection",
+    "uk": "UA",
+    "en": "EN"
+  },
+  "notes": {
+    "page": {
+      "title": "Notes",
+      "create": "Create note",
+      "listAriaLabel": "Notes list",
+      "loadingAriaLabel": "Loading notes",
+      "loading": "Loading notes…",
+      "loadError": "Failed to load notes",
+      "retry": "Try again",
+      "empty": "No notes yet",
+      "untitled": "Untitled",
+      "noText": "No text"
+    },
+    "editor": {
+      "newTitle": "New note",
+      "editTitle": "Edit note",
+      "loadingAriaLabel": "Loading note",
+      "loading": "Loading note…",
+      "titleLabel": "Title",
+      "titleRequired": "Enter a note title.",
+      "titleMaxLength": "Title must be at most {{ max }} characters.",
+      "textLabel": "Text",
+      "textMaxLength": "Text must be at most {{ max }} characters.",
+      "delete": "Delete",
+      "confirmDeleteQuestion": "Are you sure you want to delete?",
+      "confirmDelete": "Yes, delete",
+      "deleting": "Deleting…",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving…"
+    },
+    "errors": {
+      "loadList": "Failed to load notes.",
+      "loadNote": "Failed to load the note. It may have been deleted or is unavailable.",
+      "saveNote": "Failed to save the note. Please try again.",
+      "deleteNote": "Failed to delete the note"
+    }
+  }
+}

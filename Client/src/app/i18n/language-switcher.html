@@ -1,0 +1,17 @@
+<div
+  class="inline-flex items-center gap-1 rounded-full border border-(--mat-sys-outline-variant) p-1"
+  role="group"
+  [attr.aria-label]="'language.switcherAriaLabel' | translate"
+>
+  @for (lang of languages; track lang) {
+    <button
+      [matButton]="translate.currentLang() === lang ? 'tonal' : 'text'"
+      type="button"
+      class="lang-button min-w-11"
+      [attr.aria-pressed]="translate.currentLang() === lang"
+      (click)="switchLanguage(lang)"
+    >
+      {{ ('language.' + lang) | translate }}
+    </button>
+  }
+</div>
