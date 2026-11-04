@@ -1,10 +1,14 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { routes } from './app.routes';
+import { provideAppTranslate } from './i18n/translate-loader';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes)
-  ]
+    provideHttpClient(),
+    provideRouter(routes, withComponentInputBinding()),
+    provideAppTranslate(),
+  ],
 };
